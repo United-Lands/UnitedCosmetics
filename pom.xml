@@ -2,99 +2,47 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>net.unitedlands</groupId>
-  <artifactId>UnitedCosmetics</artifactId>
-  <version>1.2.0</version>
-  <packaging>jar</packaging>
+    <parent>
+        <groupId>org.unitedlands</groupId>
+        <artifactId>united-root</artifactId>
+        <version>0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-  <name>UnitedCosmetics</name>
+    <groupId>net.unitedlands</groupId>
+    <artifactId>UnitedCosmetics</artifactId>
+    <version>1.0.1</version>
 
-  <properties>
-    <java.version>25</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+    </build>
 
-  <build>
-    <defaultGoal>clean package</defaultGoal>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.3</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
+    <repositories>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.helpch.at/releases/</url>
+        </repository>
+    </repositories>
 
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
-  </build>
-
-  <repositories>
-
-      <repository>
-        <id>papermc-repo</id>
-        <url>https://repo.papermc.io/repository/maven-public/</url>
-      </repository>
-
-    <repository>
-      <id>placeholderapi</id>
-      <url>https://repo.helpch.at/releases/</url>
-    </repository>
-
-  </repositories>
-
-  <dependencies>
-
-    <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <version>26.2.build.121-stable</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.unitedlands</groupId>
-      <artifactId>UnitedLib</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>net.luckperms</groupId>
-      <artifactId>api</artifactId>
-      <version>5.5</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>me.clip</groupId>
-      <artifactId>placeholderapi</artifactId>
-      <version>2.12.3</version>
-      <scope>provided</scope>
-    </dependency>
-
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.unitedlands</groupId>
+            <artifactId>UnitedLib</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.12.3</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
