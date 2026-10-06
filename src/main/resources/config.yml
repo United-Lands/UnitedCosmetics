@@ -1,5 +1,26 @@
 ##############################################
 # +----------------------------------------+ #
+# |            Wardrobe Settings           | #
+# +----------------------------------------+ #
+##############################################
+
+wardrobe:
+  # What should the back button do.
+  # If the player is inside a vault category, it will take them out first.
+  back-command: "menu"
+  # Button material in the menu. Supports Nexo.
+  buttons:
+    back: "[nexo] icon_arrow_left_red"
+    previous: "[nexo] icon_arrow_left"
+    next: "[nexo] icon_arrow_right"
+    clear: "[nexo] icon_bin"
+  # Define the angle offsets needed for clothing to follow the player's body when sneaking.
+  positioning:
+    chest:
+      sneak-angle: 12.0
+
+##############################################
+# +----------------------------------------+ #
 # |             Prefix Settings            | #
 # +----------------------------------------+ #
 ##############################################
@@ -85,6 +106,38 @@ messages:
   chatcolour-slot-deleted: "<green>Successfully deleted chat colour slot <bold><yellow>{slot}</yellow></bold> for <bold><yellow>{player}</yellow></bold>."
   chatcolour-invalid-hex: "<red>Invalid or disallowed hex code provided."
   chatcolour-invalid-input: "<red>Missing input."
+
+  # Settings for the /wardrobe menu.
+  wardrobe-locked-item-suffix: " <dark_gray>[<#CB1D1D><bold>LOCKED</bold></#CB1D1D>]</dark_gray>"
+  wardrobe-locked-item-description:
+    - "<red><st>------------------------</st></red>"
+    - "<#FFD644>ɪɴꜰᴏ</#FFD644>"
+    - "<white>ᴘᴜʀᴄʜᴀꜱᴇ ᴛʜɪꜱ ᴄᴏꜱᴍᴇᴛɪᴄ ꜰʀᴏᴍ</white>"
+    - "<#FFD644>/ꜱʜᴏᴘ</#FFD644> <white>ᴛᴏ ᴜɴʟᴏᴄᴋ</white>"
+    - "<red><st>------------------------</st></red>"
+  wardrobe-unlocked-item-description:
+    - "<red><st>---------------------------</st></red>"
+    - "           <#FFD644>ᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ</#FFD644>"
+    - "<red><st>---------------------------</st></red>"
+  wardrobe-equipped-item-description:
+    - "<red><st>---------------------------</st></red>"
+    - "<#FFD644>ɪɴꜰᴏ</#FFD644>"
+    - "{cosmetic-type}"
+    - "<red><st>---------------------------</st></red>"
+    - "           <#FFD644>ᴄʟɪᴄᴋ ᴛᴏ ᴜɴᴇǫᴜɪᴘ</#FFD644>"
+    - "<red><st>---------------------------</st></red>"
+  wardrobe-category-name: "<#FFD644><bold>{category} Cᴏꜱᴍᴇᴛɪᴄꜱ</bold>"
+  wardrobe-category-description:
+    - "<red><strikethrough><bold>---------------------------</bold></strikethrough></red>"
+    - "<#FFD644>ɪɴꜰᴏ"
+    - "<white>ᴜɴʟᴏᴄᴋᴇᴅ: {unlocked}/{total}</white>"
+    - "<red><strikethrough><bold>---------------------------</bold></strikethrough></red>"
+    - "           <#FFD644>ᴄʟɪᴄᴋ ᴛᴏ ᴠɪᴇᴡ"
+    - "<red><strikethrough><bold>---------------------------</bold></strikethrough></red>"
+  wardrobe-button-name-back: "<#CB1D1D><bold>Bᴀᴄᴋ</bold>"
+  wardrobe-button-name-previous: "<#FFD644><bold>Pʀᴇᴠɪᴏᴜꜱ Pᴀɢᴇ</bold>"
+  wardrobe-button-name-next: "<#FFD644><bold>Nᴇxᴛ Pᴀɢᴇ</bold>"
+  wardrobe-button-name-clear: "<#CB1D1D><bold>Uɴᴇǫᴜɪᴘ Aʟʟ</bold>"
 
   admin-profile-usage: "<red>Usage: /unitedcosmetics profile [Create | Delete | Reset] [Username]"
   no-permission: "<red>You do not have permission to perform this command."

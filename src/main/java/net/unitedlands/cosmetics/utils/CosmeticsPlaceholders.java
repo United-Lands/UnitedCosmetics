@@ -76,12 +76,11 @@ public class CosmeticsPlaceholders extends PlaceholderExpansion {
             StringBuilder colours = new StringBuilder();
             int count = 0;
 
-            // Loop through however many inputs the config allows
+            // Loop through however many inputs the config allows.
             for (int i = 1; i <= maxColours; i++) {
                 String sessionVar = "%commandpanels_session_chatcolour_input_" + i + "%";
                 String input = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, sessionVar);
 
-                // Apply the exact same hex validation check!
                 if (input.matches("^#([A-Fa-f0-9]{6})$")) {
                     if (count > 0) colours.append(":");
                     colours.append(input);
@@ -108,5 +107,4 @@ public class CosmeticsPlaceholders extends PlaceholderExpansion {
             return -1;
         }
     }
-
 }

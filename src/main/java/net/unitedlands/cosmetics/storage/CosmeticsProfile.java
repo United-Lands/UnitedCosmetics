@@ -1,7 +1,7 @@
 package net.unitedlands.cosmetics.storage;
 
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,16 +10,21 @@ import org.unitedlands.utils.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import static org.bukkit.Bukkit.getPluginManager;
 
 public class CosmeticsProfile {
 
     private final OfflinePlayer player;
     private final File file;
     private FileConfiguration config;
+    private final Map<String, EquippedClothing> equippedClothing = new HashMap<>();
 
     public CosmeticsProfile(OfflinePlayer player) {
-        JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("UnitedCosmetics");
+        JavaPlugin plugin = (JavaPlugin) getPluginManager().getPlugin("UnitedCosmetics");
         this.player = player;
         this.file = new File(Objects.requireNonNull(plugin).getDataFolder(), "players" + File.separator + player.getUniqueId() + ".yml");
         this.config = loadConfig();
@@ -99,8 +104,20 @@ public class CosmeticsProfile {
         if (!hasFile()) return new YamlConfiguration();
 
         FileConfiguration fileConfiguration = new YamlConfiguration();
+
         try {
             fileConfiguration.load(file);
+            equippedClothing.clear();
+            ConfigurationSection section = fileConfiguration.getConfigurationSection("equipped.clothing");
+
+            if (section != null) {
+                for (String type : section.getKeys(false)) {
+                    String nexoId = section.getString(type + ".id");
+                    boolean isDigital = section.getBoolean(type + ".digital");
+                    equippedClothing.put(type, new EquippedClothing(nexoId, isDigital));
+                }
+            }
+
             return fileConfiguration;
         } catch (IOException | InvalidConfigurationException e) {
             Logger.logError("Failed to load player data file: " + file.getAbsolutePath(), "UnitedCosmetics");
@@ -110,6 +127,13 @@ public class CosmeticsProfile {
 
     private void saveConfig() {
         try {
+
+            config.set("equipped.clothing", null);
+            equippedClothing.forEach((type, item) -> {
+                config.set("equipped.clothing." + type + ".id", item.nexoId());
+                config.set("equipped.clothing." + type + ".digital", item.isDigital());
+            });
+
             config.save(file);
         } catch (IOException e) {
             Logger.logError("Failed to save player data file: " + file.getAbsolutePath(), "UnitedCosmetics");
@@ -126,11 +150,13 @@ public class CosmeticsProfile {
     }
 
     public void savePrefix(int slot, String prefixRaw) {
+        if (!hasFile()) createFile();
         config.set("saved-prefixes.slot_" + slot, prefixRaw);
         saveConfig();
     }
 
     public void setEquippedPrefix(String slotKey) {
+        if (!hasFile()) createFile();
         config.set("equipped.prefix", slotKey);
         saveConfig();
     }
@@ -145,16 +171,39 @@ public class CosmeticsProfile {
     }
 
     public void saveChatColour(int slot, String colourTag) {
+        if (!hasFile()) createFile();
         config.set("saved-chat-colours.slot_" + slot, colourTag);
         saveConfig();
     }
 
     public void setEquippedChatColour(String slotKey) {
+        if (!hasFile()) createFile();
         config.set("equipped.chat-colour", slotKey);
         saveConfig();
     }
 
     public String getEquippedChatColour() {
         return config.getString("equipped.chat-colour");
+    }
+
+    // Clothing
+    public EquippedClothing getEquippedClothing(String type) {
+        return equippedClothing.get(type);
+    }
+
+    public void setEquippedClothing(String type, String nexoId, boolean isDigital) {
+        if (!hasFile()) createFile();
+        equippedClothing.put(type, new EquippedClothing(nexoId, isDigital));
+        saveConfig();
+    }
+
+    public void removeEquippedClothing(String type) {
+        if (!hasFile()) return;
+        equippedClothing.remove(type);
+        saveConfig();
+    }
+
+    public boolean hasEquippedClothing(String type) {
+        return equippedClothing.containsKey(type);
     }
 }

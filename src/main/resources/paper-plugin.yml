@@ -3,7 +3,7 @@ version: '${project.version}'
 main: net.unitedlands.cosmetics.UnitedCosmetics
 api-version: '1.21'
 prefix: UnitedCosmetics
-load: STARTUP
+load: POSTWORLD
 authors: [Litning11]
 description: Cosmetics manager for United Lands.
 

@@ -5,6 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.node.NodeType;
 import net.unitedlands.cosmetics.UnitedCosmetics;
+import net.unitedlands.cosmetics.managers.VaultManager;
 import net.unitedlands.cosmetics.storage.CosmeticsProfile;
 import net.unitedlands.cosmetics.utils.FeedbackProvider;
 import net.unitedlands.cosmetics.utils.MessageProvider;
@@ -22,13 +23,15 @@ public class AdminCommands implements BasicCommand {
     private final UnitedCosmetics plugin;
     private final MessageProvider messageProvider;
     private final TabCompleter tabCompleter;
+    private final VaultManager vaultManager;
     private final PrefixCommands prefixCommands;
     private final ChatColourCommands chatColourCommands;
 
-    public AdminCommands(UnitedCosmetics plugin, MessageProvider messageProvider, TabCompleter tabCompleter) {
+    public AdminCommands(UnitedCosmetics plugin, MessageProvider messageProvider, TabCompleter tabCompleter, VaultManager vaultManager) {
         this.plugin = plugin;
         this.messageProvider = messageProvider;
         this.tabCompleter = tabCompleter;
+        this.vaultManager = vaultManager;
         this.prefixCommands = new PrefixCommands(plugin, messageProvider);
         this.chatColourCommands = new ChatColourCommands(plugin, messageProvider);
     }
@@ -50,6 +53,7 @@ public class AdminCommands implements BasicCommand {
         if (args[0].equalsIgnoreCase("reload")) {
             plugin.reloadConfig();
             messageProvider.reload(plugin.getConfig());
+            vaultManager.reloadVault();
             Messenger.sendMessage(sender, messageProvider.get("messages.reload"), null, prefix);
             return;
         }
